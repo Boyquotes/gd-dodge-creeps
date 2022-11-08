@@ -18,6 +18,7 @@ public class Main : Node
 	{
 		GetNode<Timer>("MobTimer").Stop();
 		GetNode<Timer>("ScoreTimer").Stop();
+		GetNode<HUD>("HUD").ShowGameOver();
 	}
 
 	public void NewGame()
@@ -29,12 +30,17 @@ public class Main : Node
 		player.Start(startPosition.Position);
 
 		GetNode<Timer>("StartTimer").Start();
-	}
+
+        var hud = GetNode<HUD>("HUD");
+        hud.UpdateScore(Score);
+        hud.ShowMessage("Get Ready!");
+    }
 
 	public void OnScoreTimerTimeout()
 	{
 		Score++;
-	}
+        GetNode<HUD>("HUD").UpdateScore(Score);
+    }
 
 	public void OnStartTimerTimeout()
 	{
