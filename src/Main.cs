@@ -11,7 +11,6 @@ public class Main : Node
 	public override void _Ready()
 	{
 		GD.Randomize();
-		NewGame();
 	}
 
 	public void GameOver()
@@ -34,6 +33,7 @@ public class Main : Node
         var hud = GetNode<HUD>("HUD");
         hud.UpdateScore(Score);
         hud.ShowMessage("Get Ready!");
+        GetTree().CallGroup("mobs", "queue_free");
     }
 
 	public void OnScoreTimerTimeout()
