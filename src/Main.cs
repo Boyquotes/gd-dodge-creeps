@@ -38,7 +38,10 @@ public class Main : Node
         hud.UpdateScore(Score, HighScore);
         hud.ShowMessage("Get Ready!");
         GetTree().CallGroup("mobs", "queue_free");
-		GetNode<AudioStreamPlayer>("Music").Play();
+		if (hud.music)
+		{
+        GetNode<AudioStreamPlayer>("Music").Play();
+		}
     }
 
 	public void OnScoreTimerTimeout()
