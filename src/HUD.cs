@@ -19,6 +19,7 @@ public class HUD : CanvasLayer
         
         var messageTimer =  GetNode<Timer>("MessageTimer");
         await ToSignal(messageTimer, "timeout");
+        GetNode<Label>("ScoreLabel").Text = "0";
 
         var message = GetNode<Label>("Message");
         message.Text = "Dodge the Creeps!";
@@ -28,9 +29,10 @@ public class HUD : CanvasLayer
         GetNode<Button>("StartButton").Show();
     }
 
-    public void UpdateScore(int score)
+    public void UpdateScore(int score, int highscore)
     {
         GetNode<Label>("ScoreLabel").Text = score.ToString();
+        GetNode<Label>("HighscoreLabel").Text = "Highscore: " + highscore.ToString();
     }
 
     public void OnStartButtonPressed()

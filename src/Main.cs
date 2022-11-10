@@ -8,6 +8,7 @@ public class Main : Node
 	public PackedScene MobScene;
 #pragma warning restore 649
 	public int Score;
+	public int HighScore;
 	public override void _Ready()
 	{
 		GD.Randomize();
@@ -34,7 +35,7 @@ public class Main : Node
 		GetNode<Timer>("StartTimer").Start();
 
         var hud = GetNode<HUD>("HUD");
-        hud.UpdateScore(Score);
+        hud.UpdateScore(Score, HighScore);
         hud.ShowMessage("Get Ready!");
         GetTree().CallGroup("mobs", "queue_free");
 		GetNode<AudioStreamPlayer>("Music").Play();
@@ -43,7 +44,9 @@ public class Main : Node
 	public void OnScoreTimerTimeout()
 	{
 		Score++;
-        GetNode<HUD>("HUD").UpdateScore(Score);
+		if(Score >= HighScore) { HighScore = Score; }
+        GetNode<HUD>("HUD").UpdateScore(Score, HighScore);
+
     }
 
 	public void OnStartTimerTimeout()
