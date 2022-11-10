@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/font/Xolonium-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://src/HUD.cs" type="Script" id=2]
@@ -26,6 +26,12 @@ action = "start_game"
 
 [sub_resource type="ShortCut" id=5]
 shortcut = SubResource( 4 )
+
+[sub_resource type="InputEventAction" id=7]
+action = "music"
+
+[sub_resource type="ShortCut" id=8]
+shortcut = SubResource( 7 )
 
 [node name="HUD" type="CanvasLayer"]
 script = ExtResource( 2 )
@@ -97,8 +103,10 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_icons/off = ExtResource( 3 )
 custom_icons/on = ExtResource( 4 )
+shortcut_in_tooltip = false
 pressed = true
 enabled_focus_mode = 0
+shortcut = SubResource( 8 )
 
 [connection signal="pressed" from="StartButton" to="." method="OnStartButtonPressed"]
 [connection signal="timeout" from="MessageTimer" to="." method="OnMessageTimerTimeout"]
