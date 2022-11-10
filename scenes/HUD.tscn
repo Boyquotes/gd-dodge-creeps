@@ -78,6 +78,7 @@ margin_top = -0.200043
 margin_right = 0.171997
 margin_bottom = 0.199951
 custom_fonts/font = SubResource( 3 )
+shortcut_in_tooltip = false
 shortcut = SubResource( 5 )
 text = "Start!"
 
