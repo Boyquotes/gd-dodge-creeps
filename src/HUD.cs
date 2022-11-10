@@ -15,13 +15,13 @@ public class HUD : CanvasLayer
     }
 
     async public void ShowGameOver() {
-        ShowMessage("Gameover");
+        ShowMessage("Game over!");
         
         var messageTimer =  GetNode<Timer>("MessageTimer");
         await ToSignal(messageTimer, "timeout");
 
         var message = GetNode<Label>("Message");
-        message.Text = "Dodge the/nCreeps!";
+        message.Text = "Dodge the Creeps!";
         message.Show();
 
         await ToSignal(GetTree().CreateTimer(1), "timeout");
