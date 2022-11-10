@@ -3,6 +3,7 @@ using System;
 
 public class Main : Node
 {
+	public ConfigFile config = new ConfigFile();
 #pragma warning disable 649
 	[Export]
 	public PackedScene MobScene;
@@ -12,8 +13,8 @@ public class Main : Node
 	public override void _Ready()
 	{
 		GD.Randomize();
+		LoadSaveGame();
 	}
-
 	public void GameOver()
 	{
 		GetNode<Timer>("MobTimer").Stop();
@@ -21,7 +22,7 @@ public class Main : Node
 		GetNode<HUD>("HUD").ShowGameOver();
         GetNode<AudioStreamPlayer>("Music").Stop();
 		GetNode<AudioStreamPlayer>("DeathSound").Play();
-
+		SaveGame();
     }
 
 	public void NewGame()
@@ -35,7 +36,8 @@ public class Main : Node
 		GetNode<Timer>("StartTimer").Start();
 
         var hud = GetNode<HUD>("HUD");
-        hud.UpdateScore(Score, HighScore);
+        hud.UpdateScore(Score);
+        hud.UpdateHighScore(HighScore);
         hud.ShowMessage("Get Ready!");
         GetTree().CallGroup("mobs", "queue_free");
 		if (hud.music)
@@ -48,7 +50,8 @@ public class Main : Node
 	{
 		Score++;
 		if(Score >= HighScore) { HighScore = Score; }
-        GetNode<HUD>("HUD").UpdateScore(Score, HighScore);
+        GetNode<HUD>("HUD").UpdateScore(Score);
+        GetNode<HUD>("HUD").UpdateHighScore(HighScore);
 
     }
 
@@ -77,6 +80,21 @@ public class Main : Node
 		mob.LinearVelocity = velocity.Rotated(direction);
 
 		AddChild(mob);
-
 	}
+
+	public void SaveGame()
+	{
+		config.SetValue("Main", "HighScore", HighScore);
+		GD.Print("Saving HighScore to: " + OS.GetUserDataDir() + "/savegame.dat");
+        config.Save("user://savegame.dat");
+	}
+
+	public void LoadSaveGame()
+	{
+        config.Load("user://savegame.dat");
+        HighScore = (int)config.GetValue("Main", "HighScore", HighScore);
+        GD.Print("Loaded HighScore from: " + OS.GetUserDataDir() + "/savegame.dat");
+		GD.Print("HighScore: " + HighScore);
+        GetNode<HUD>("HUD").UpdateHighScore(HighScore);
+    }
 }

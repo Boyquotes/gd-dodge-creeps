@@ -33,9 +33,12 @@ public class HUD : CanvasLayer
         GetNode<CheckButton>("MusicSetting").Show();
     }
 
-    public void UpdateScore(int score, int highscore)
+    public void UpdateScore(int score)
     {
         GetNode<Label>("ScoreLabel").Text = score.ToString();
+    }
+    public void UpdateHighScore(int highscore)
+    {
         GetNode<Label>("HighscoreLabel").Text = "Highscore: " + highscore.ToString();
     }
 
